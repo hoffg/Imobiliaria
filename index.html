@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GAVI · Gestão de Autorização de Vendas de Imóveis</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M24 4L44 40H30L24 28L18 40H4L24 4Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+        <circle cx="24" cy="18" r="2.5" fill="currentColor"/>
+      </svg>
+      <p class="brand-text"><span class="hl">G</span>estão de <span class="hl">A</span>utorização de <span class="hl">V</span>endas de <span class="hl">I</span>móveis</p>
+    </div>
+
+    <nav class="nav">
+      <button class="nav-item active" data-view="dashboard">
+        <svg viewBox="0 0 24 24"><path d="M4 13h6V4H4v9zm0 7h6v-5H4v5zm10 0h6V11h-6v9zm0-16v5h6V4h-6z" fill="currentColor"/></svg>
+        <span>Painel Inicial</span>
+      </button>
+      <button class="nav-item" data-view="registros">
+        <svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h6l2 2h6a2 2 0 0 1 2 2v2H4V5zm0 4h18v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9z" fill="currentColor"/></svg>
+        <span>Registro Geral</span>
+      </button>
+      <button class="nav-item" data-view="clientes">
+        <svg viewBox="0 0 24 24"><path d="M9 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 2c-4 0-8 2-8 5v1h16v-1c0-3-4-5-8-5zm8-6a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zm0 2c-.8 0-1.7.1-2.5.4 1.6 1.1 2.5 2.6 2.5 4.6v1h6v-1c0-3-3-5-6-5z" fill="currentColor"/></svg>
+        <span>Clientes</span>
+      </button>
+    </nav>
+
+    <button class="nav-item settings-item" data-view="configuracoes">
+      <svg viewBox="0 0 24 24"><path d="M19.14 12.94a7.07 7.07 0 0 0 .06-.94 7.07 7.07 0 0 0-.06-.94l2.03-1.58a.5.5 0 0 0 .12-.64l-1.92-3.32a.5.5 0 0 0-.6-.22l-2.39.96a7.3 7.3 0 0 0-1.63-.94l-.36-2.54a.5.5 0 0 0-.5-.42h-3.84a.5.5 0 0 0-.5.42l-.36 2.54c-.59.24-1.14.56-1.63.94l-2.39-.96a.5.5 0 0 0-.6.22L2.7 8.84a.5.5 0 0 0 .12.64l2.03 1.58c-.04.31-.06.62-.06.94s.02.63.06.94L2.82 14.5a.5.5 0 0 0-.12.64l1.92 3.32c.14.24.42.32.6.22l2.39-.96c.49.38 1.04.7 1.63.94l.36 2.54c.05.24.26.42.5.42h3.84c.24 0 .45-.18.5-.42l.36-2.54c.59-.24 1.14-.56 1.63-.94l2.39.96c.24.1.46 0 .6-.22l1.92-3.32a.5.5 0 0 0-.12-.64l-2.03-1.56zM12 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7z" fill="currentColor"/></svg>
+      <span>Configurações</span>
+    </button>
+  </aside>
+
+  <div class="scrim" id="scrim"></div>
+
+  <!-- ============ MAIN ============ -->
+  <main class="main">
+    <header class="topbar">
+      <button class="burger" id="burger" aria-label="Abrir menu">
+        <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <div class="topbar-title" id="viewTitle">
+        <svg viewBox="0 0 24 24" id="viewIcon"><path d="M4 13h6V4H4v9zm0 7h6v-5H4v5zm10 0h6V11h-6v9zm0-16v5h6V4h-6z" fill="currentColor"/></svg>
+        <h1>Painel Inicial</h1>
+      </div>
+      <a class="brand-badge" href="images/powered-by-ggsent.png" target="_blank" rel="noopener" title="Powered by GGSENT">
+        <img src="images/powered-by-ggsent.png" alt="Powered by GGSENT">
+      </a>
+    </header>
+
+    <div class="content">
+
+      <!-- ============ DASHBOARD ============ -->
+      <section class="view active" id="view-dashboard">
+        <div class="card card-total">
+          <p class="card-label">Registros Ativos Gerenciados</p>
+          <p class="card-number" id="statTotal">0</p>
+        </div>
+
+        <div class="stat-grid">
+          <div class="card stat-card">
+            <p class="card-label status-vigente">Vigentes</p>
+            <p class="card-number status-vigente" id="statVigentes">0</p>
+          </div>
+          <div class="card stat-card">
+            <p class="card-label status-proximo">Vencimento Próximo</p>
+            <p class="card-number status-proximo" id="statProximo">0</p>
+          </div>
+          <div class="card stat-card">
+            <p class="card-label status-vencido">Vencidos</p>
+            <p class="card-number status-vencido" id="statVencidos">0</p>
+          </div>
+        </div>
+
+        <div class="card card-total card-muted">
+          <p class="card-label">Registros Encerrados</p>
+          <p class="card-number" id="statEncerrados">0</p>
+        </div>
+
+        <div class="card table-card">
+          <div class="table-card-head">
+            <h2>Atividade recente</h2>
+          </div>
+          <div class="table-wrap">
+            <table id="recentTable">
+              <thead><tr><th>Ref.</th><th>Endereço</th><th>Cliente</th><th>Status</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <p class="empty-state" id="recentEmpty" hidden>Nenhum registro ainda. Crie o primeiro em <strong>Registro Geral</strong>.</p>
+        </div>
+      </section>
+
+      <!-- ============ REGISTRO GERAL ============ -->
+      <section class="view" id="view-registros">
+        <div class="toolbar">
+          <button class="btn btn-primary" id="btnNovoRegistro">
+            <span>Novo Registro</span>
+            <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+          </button>
+          <div class="search-box">
+            <input type="text" id="searchRegistros" placeholder="Nome, ref, endereço...">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="m21 21-4.3-4.3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+        </div>
+
+        <div class="card table-card">
+          <div class="table-wrap">
+            <table id="registrosTable">
+              <thead>
+                <tr>
+                  <th>Ref.</th><th>Endereço</th><th>Proprietário</th><th>Último Registro</th>
+                  <th>Vencimento</th><th>Status</th><th>Encerramento</th><th></th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <p class="empty-state" id="registrosEmpty" hidden>Nenhum registro encontrado.</p>
+        </div>
+      </section>
+
+      <!-- ============ CLIENTES ============ -->
+      <section class="view" id="view-clientes">
+        <div class="toolbar toolbar-clients">
+          <div class="search-box grow">
+            <input type="text" id="searchClientes" placeholder="Procure por um cliente">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="m21 21-4.3-4.3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <div class="sort-box">
+            <label>Ordenar</label>
+            <select id="sortClientes">
+              <option value="az">A-Z</option>
+              <option value="za">Z-A</option>
+              <option value="recent">Mais recentes</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="client-grid" id="clientGrid"></div>
+        <p class="empty-state" id="clientsEmpty" hidden>Nenhum cliente encontrado.</p>
+
+        <button class="fab" id="btnNovoCliente" aria-label="Novo cliente">
+          <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
+        </button>
+      </section>
+
+      <!-- ============ CONFIGURAÇÕES ============ -->
+      <section class="view" id="view-configuracoes">
+        <div class="settings-grid">
+          <form class="card settings-card" id="formEmpresa">
+            <h2>Dados da empresa</h2>
+            <div class="field">
+              <label>Nome da empresa</label>
+              <input type="text" id="cfgNome" placeholder="Nome da imobiliária">
+            </div>
+            <div class="field">
+              <label>WhatsApp de contato</label>
+              <input type="text" id="cfgWhats" placeholder="(46) 9 9900-0099">
+            </div>
+            <div class="field">
+              <label>Endereço</label>
+              <input type="text" id="cfgEndereco" placeholder="Rua, Número - Bairro, Cidade - Estado">
+            </div>
+            <div class="field">
+              <label>Alertar vencimento com quantos dias de antecedência?</label>
+              <input type="number" id="cfgJanela" min="1" max="180" value="30">
+            </div>
+            <button class="btn btn-primary" type="submit">
+              <span>Salvar</span>
+              <svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </form>
+
+          <div class="card settings-card">
+            <h2>Dados do sistema</h2>
+            <p class="settings-hint">Seus dados ficam salvos apenas neste navegador. Faça backups periódicos para não os perder.</p>
+            <div class="settings-actions">
+              <button class="btn btn-ghost" id="btnExport">
+                <svg viewBox="0 0 24 24"><path d="M12 3v12m0 0-4-4m4 4 4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Exportar backup (.json)
+              </button>
+              <label class="btn btn-ghost" for="importFile">
+                <svg viewBox="0 0 24 24"><path d="M12 21V9m0 0 4 4m-4-4-4 4M4 7V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Importar backup
+              </label>
+              <input type="file" id="importFile" accept="application/json" hidden>
+            </div>
+            <div class="settings-danger">
+              <div>
+                <strong>Restaurar dados de exemplo</strong>
+                <p>Repõe os clientes e registros de demonstração.</p>
+              </div>
+              <button class="btn btn-outline" id="btnSeed">Restaurar</button>
+            </div>
+            <div class="settings-danger">
+              <div>
+                <strong>Apagar todos os dados</strong>
+                <p>Remove clientes, registros e documentos permanentemente.</p>
+              </div>
+              <button class="btn btn-danger" id="btnWipe">Apagar tudo</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<!-- ============ MODAL: CLIENTE ============ -->
+<div class="modal-backdrop" id="modalCliente">
+  <div class="modal">
+    <div class="modal-head">
+      <h2 id="clienteModalTitle">Novo Cliente</h2>
+      <button class="icon-btn close-modal" data-close="modalCliente" aria-label="Fechar">
+        <svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <form id="formCliente">
+      <input type="hidden" id="clienteId">
+      <div class="field">
+        <label>Nome Completo</label>
+        <input type="text" id="clienteNome" placeholder="Nome" required>
+      </div>
+      <div class="field">
+        <label>Telefone</label>
+        <input type="text" id="clienteTelefone" placeholder="(46) 9 9900-0099" required>
+      </div>
+      <div class="field">
+        <label>Endereço</label>
+        <input type="text" id="clienteEndereco" placeholder="Rua, Número - Bairro, Cidade - Estado">
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" id="btnDeleteCliente" hidden>Excluir cliente</button>
+        <button type="submit" class="btn btn-primary">
+          <span>Salvar</span>
+          <svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ============ MODAL: REGISTRO ============ -->
+<div class="modal-backdrop" id="modalRegistro">
+  <div class="modal modal-lg">
+    <div class="modal-head">
+      <h2 id="registroModalTitle">Novo Registro</h2>
+      <button class="icon-btn close-modal" data-close="modalRegistro" aria-label="Fechar">
+        <svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <form id="formRegistro">
+      <input type="hidden" id="registroId">
+      <div class="grid-2">
+        <div class="field">
+          <label>Endereço</label>
+          <input type="text" id="registroEndereco" placeholder="Rua, Número - Bairro, Cidade - Estado" required>
+        </div>
+        <div class="field">
+          <label>Nº Ref. Lançamento</label>
+          <input type="text" id="registroRef" placeholder="005C46" required>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="field">
+          <label>Cliente</label>
+          <input type="text" id="registroCliente" list="clientesList" placeholder="Digitar nome" required>
+          <datalist id="clientesList"></datalist>
+        </div>
+        <div class="field">
+          <label>Colaborador Responsável</label>
+          <input type="text" id="registroColaborador" list="colaboradoresList" placeholder="Digitar nome">
+          <datalist id="colaboradoresList"></datalist>
+        </div>
+      </div>
+
+      <div class="grid-2 docs-grid">
+        <div class="field">
+          <label>Anexar documentos</label>
+          <div class="dropzone" id="dropzone">
+            <svg viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9l-6-6z" stroke="currentColor" stroke-width="1.6"/><path d="M13 3v6h6M9 15l3-3 3 3M12 12v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <p>Adicione um ou mais arquivos arrastando para o campo, ou clique para selecionar em diretório.</p>
+            <input type="file" id="fileInput" multiple hidden>
+          </div>
+        </div>
+        <div class="field">
+          <label>Documentos Anexados</label>
+          <div class="docs-table-wrap">
+            <table class="docs-table" id="docsTable">
+              <thead><tr><th>Título</th><th>Inclusão</th><th>Validade</th><th>Status</th><th></th></tr></thead>
+              <tbody></tbody>
+            </table>
+            <p class="empty-state small" id="docsEmpty">Nenhum documento anexado ainda.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-actions modal-actions-registro">
+        <button type="button" class="btn btn-whatsapp" id="btnContatarCliente" hidden>
+          <svg viewBox="0 0 32 32"><path fill="currentColor" d="M16.001 3C9.373 3 4 8.373 4 15c0 2.386.7 4.61 1.902 6.478L4 29l7.72-1.865A11.94 11.94 0 0 0 16.001 27C22.628 27 28 21.627 28 15S22.628 3 16.001 3zm0 21.818a9.77 9.77 0 0 1-4.98-1.363l-.357-.212-4.583 1.107 1.128-4.464-.232-.365A9.78 9.78 0 0 1 5.182 15c0-5.966 4.853-10.818 10.819-10.818S26.818 9.034 26.818 15 21.966 24.818 16.001 24.818zm5.514-8.146c-.302-.151-1.784-.881-2.06-.982-.276-.101-.477-.151-.678.151-.2.302-.78.982-.956 1.184-.176.201-.352.226-.654.075-.302-.151-1.276-.47-2.431-1.5-.899-.802-1.506-1.792-1.682-2.094-.176-.302-.019-.465.132-.616.135-.135.302-.352.453-.528.151-.176.201-.302.302-.503.101-.201.05-.377-.025-.528-.075-.151-.678-1.633-.929-2.236-.244-.586-.492-.507-.678-.517-.176-.008-.377-.01-.578-.01-.2 0-.528.075-.804.377-.276.302-1.055 1.031-1.055 2.514 0 1.483 1.08 2.916 1.231 3.117.151.201 2.126 3.248 5.15 4.556.719.31 1.28.495 1.718.634.722.23 1.379.198 1.898.12.579-.087 1.784-.729 2.036-1.433.251-.704.251-1.307.176-1.433-.075-.126-.276-.201-.578-.352z"/></svg>
+          Contatar Cliente
+        </button>
+        <button type="button" class="btn btn-danger" id="btnEncerrarRegistro" hidden>
+          <svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h6l2 2h6a2 2 0 0 1 2 2v2H4V5zm0 4h18v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9z" fill="currentColor"/></svg>
+          Encerrar Registro
+        </button>
+        <button type="submit" class="btn btn-primary">
+          <span>Salvar Registro</span>
+          <svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="js/app.js"></script>
+</body>
+</html>
